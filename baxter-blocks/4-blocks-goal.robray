@@ -1,0 +1,34 @@
+
+include "class.robray"
+include "table.robray"
+
+
+/**********/
+/* Blocks */
+/**********/
+frame block_a {
+    parent block_b;
+    translation [0, 0, block_stack];
+    geometry {
+        isa block;
+        isa red;
+    }
+}
+
+frame block_b {
+    parent block_c;
+    translation [0, -.25, block_stack];
+    geometry {
+        isa block;
+        isa blue;
+    }
+}
+
+ frame block_d {
+     parent block_a; // block "D" is stacked on block "A"
+     /* set the relative height of block "D" */
+     translation [0, 0, block_stack];
+     geometry {
+         isa block;
+     }
+ }

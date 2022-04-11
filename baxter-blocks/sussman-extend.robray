@@ -1,0 +1,57 @@
+
+include "class.robray"
+include "table.robray"
+
+
+/**********/
+/* Blocks */
+/**********/
+frame block_a {
+    parent front_table;
+    translation [0, 0, table_stack];
+    geometry {
+        isa block;
+        isa red;
+    }
+}
+
+frame block_b {
+    parent front_table;
+    translation [0, -.25, table_stack];
+    geometry {
+        isa block;
+        isa blue;
+    }
+}
+
+frame block_c {
+    parent block_a;
+    translation [0, 0, block_stack];
+    geometry {
+        isa block;
+        isa green;
+    }
+}
+
+def button_height .05;
+
+ frame button_base {
+     parent front_table;
+     translation [-.3, -.3, button_height/2];
+     geometry {
+         shape box;
+         dimension [.1, .1, button_height];
+         color [.5, .5, .5];
+     }
+ }
+
+ frame button {
+     parent button_base;
+     translation [0, 0, button_height/2];
+     geometry {
+         shape cylinder;
+         radius .025;
+         height .03;
+         color [1, 0, 0 ];
+     }
+ }

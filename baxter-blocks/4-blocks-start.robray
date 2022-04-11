@@ -1,0 +1,45 @@
+
+include "class.robray"
+include "table.robray"
+
+
+/**********/
+/* Blocks */
+/**********/
+frame block_a {
+    parent front_table;
+    translation [0, 0, table_stack];
+    geometry {
+        isa block;
+        isa red;
+    }
+}
+
+frame block_b {
+    parent front_table;
+    translation [0, -.25, table_stack];
+    geometry {
+        isa block;
+        isa blue;
+    }
+}
+
+frame block_c {
+    parent block_a;
+    translation [0, 0, block_stack];
+    geometry {
+        isa block;
+        isa green;
+    }
+}
+
+ /* the kinematic frame for block "D" */
+ frame block_d {
+     parent block_b; // block_d is initially on block_b
+     /* set the height of block_d above block_b */
+     translation [0, 0, block_stack];
+     geometry {
+         isa block;
+         color [0,1,1]; // block_d is cyan
+     }
+ }

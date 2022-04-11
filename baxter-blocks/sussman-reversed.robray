@@ -1,0 +1,18 @@
+/* include common definitions for blocks */
+ include "class.robray"
+
+ /* the kinematic frame for block "C" */
+ frame block_c {
+     parent block_b;  // the parent from of block_c is block_b
+     geometry {
+         isa block; // geometry class for blocks
+     }
+ }
+
+ /* the kinematic frame for block "B" */
+ frame block_b {
+     parent block_a;  // the parent frame of block_b is block_a
+     geometry {
+         isa block; // geometry class for blocks
+     }
+ }
