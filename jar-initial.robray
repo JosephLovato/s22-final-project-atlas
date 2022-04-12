@@ -1,0 +1,26 @@
+include "class.robray"
+include "table.robray"
+
+
+
+frame jar {
+     parent front_table;
+     translation [0, 0, 0];
+     geometry {
+         shape cylinder;
+         radius .045;
+         height .10;
+         color [0, 1, 0 ];
+     }
+ }
+
+ frame lid {
+     parent jar;
+     translation [0, 0, 0.1];
+     geometry {
+         shape cylinder;
+         radius 0.045;
+         height .01;
+         color [1, 0, 0];
+     }
+ }
