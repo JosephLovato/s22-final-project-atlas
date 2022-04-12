@@ -1,12 +1,15 @@
 (define (domain jar)
-
+    (:requirements :typing)
+  (:types jar - object
+          lid - object
+          location - object)
 (:predicates    (handEmptyJar)
                 (handEmptyLid)
-                (holdingJar ?x)
-                (holdingLid ?x)
-                (noLid ?x)
+                (holdingJar ?x - jar)
+                (holdingLid ?x - lid)
+                (noLid ?x - jar)
                 (ontable ?x ?loc - location)
-                (clear ?x)
+                (clear ?x - location)
 )
 
 (:action pick-up-jar
@@ -22,7 +25,7 @@
 )
 
 (:action pick-up-lid
-    :parameters (?x -jar ?loc - location)
+    :parameters (?x -lid ?loc - location)
     :precondition (and (handEmptyLid)
                        (ontable ?x ?loc)
                        (not (noLid ?x)))
@@ -34,7 +37,7 @@
 )
 
 (:action put-down-jar
-    :parameters (?x ?loc)
+    :parameters (?x - jar ?loc - location)
     :precondition (and (holdingJar ?x)
                        (noLid ?x)
                        (clear ?loc))
@@ -45,7 +48,7 @@
 )
 
 (:action put-down-lid
-    :parameters (?x ?loc)
+    :parameters (?x - lid ?loc- location)
     :precondition (and (holdingLid ?x)
                        (noLid ?x)
                        (clear ?loc))
@@ -56,7 +59,7 @@
 )
 
 (:action twist
-    :parameters (?x ?y)
+    :parameters (?x - jar ?y - lid)
     :precondition (and (holdingJar ?x)
                   (holdingLid ?y)
                   (not (noLid ?x)))
