@@ -1,0 +1,23 @@
+(define (problem jar-anamoly)
+        (:domain jar)
+        (:objects pickle-jar - jar
+                  pickle-lid - lid
+                  spot - location
+                  other-spot - location)
+        (:init (handEmptyJar)
+               (handEmptyLid)
+               (ontable pickle-jar spot)
+               (not (holdingJar pickle-jar))
+               (not (holdingLid pickle-lid))
+               (attached)
+               (not (clear spot))
+               (clear other-spot))
+        (:goal (and (handEmptyJar)
+                    (handEmptyLid)
+                    (ontable pickle-jar spot)
+                    (ontable pickle-lid other-spot)
+                    (not (holdingJar pickle-jar))
+                    (not (holdingLid pickle-lid))
+                    (not (attached))
+                    (not (clear spot))
+                    (not (clear other-spot)))))

@@ -11,6 +11,7 @@ frame jar {
          radius .045;
          height .10;
          color [0, 1, 0 ];
+         isa moveable;
      }
  }
 
@@ -22,5 +23,6 @@ frame jar {
          radius 0.045;
          height .01;
          color [1, 0, 0];
+         isa moveable;
      }
  }
