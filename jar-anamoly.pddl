@@ -21,3 +21,11 @@
                     (not (attached))
                     (not (clear spot))
                     (not (clear other-spot)))))
+
+; Begin plan
+; 1 (pick-up-jar pickle-jar spot)
+; 1 (grab-lid pickle-lid spot)
+; 2 (twist pickle-jar pickle-lid)
+; 3 (put-down-lid pickle-lid other-spot)
+; 3 (put-down-jar pickle-jar spot)
+; End plan
