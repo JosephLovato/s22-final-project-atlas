@@ -3,26 +3,18 @@ include "table.robray"
 
 
 
-frame jar {
+frame pickle_jar {
      parent front_table;
      translation [0, 0, 0];
      geometry {
-         shape cylinder;
-         radius .045;
-         height .10;
-         color [0, 1, 0 ];
-         isa moveable;
+         isa jar;
      }
  }
 
- frame lid {
-     parent jar;
+ frame pickle_lid {
+     parent pickle_jar;
      translation [0, 0, 0.1];
      geometry {
-         shape cylinder;
-         radius 0.045;
-         height .01;
-         color [1, 0, 0];
-         isa moveable;
+         isa lid;
      }
  }

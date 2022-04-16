@@ -66,6 +66,8 @@ def location_table(parent,frame):
     i = int(round( trans[0] / RESOLUTION))
     j = int(round( trans[1] / RESOLUTION))
     position = tm.mangle(parent_name,i,j)
+    print("ATLAS", (["ONTABLE", name, position], i, j))
+    print("ATLAS: ", frame.name, type(frame.name))
     return (["ONTABLE", name, position], i, j)
 
 ############################
@@ -102,11 +104,12 @@ def collision_constraint(scene,op,objs):
 ## Problem is with the "Clear" predicate
 def make_state(scene, configuration, is_goal):
     '''Map the scene graph `scene' to a task state expression'''
-
+    print("SCENE:", scene)
     ## terms in the expression
     conjunction = []
     occupied = {}
     moveable_frames = tm.collect_frame_type(scene,"moveable")
+    print("MOVEABLE_FRAMES:", moveable_frames)
 
     ## Add object locations
     handempty = [True]
@@ -124,6 +127,7 @@ def make_state(scene, configuration, is_goal):
     def handle_moveable(frame):
         name = frame.name
         parent_name = frame.parent
+        print("HANDLE: NAME:", name, "PARENT: ", parent_name)
 
         try:
             # If parent frame is a placement surface, position is the
@@ -132,6 +136,7 @@ def make_state(scene, configuration, is_goal):
             if aa.frame_isa(parent_frame, "surface"):
                 (x, i, j) = location_table(parent_frame,frame)
                 conjunction.append(x)
+                print("ATLAS: X", x)
 
                 occupied[(parent_name,i,j)] = True
             else:
@@ -158,6 +163,7 @@ def make_state(scene, configuration, is_goal):
         map(clear_block, moveable_frames)
         map_locations(clear_location,scene)
 
+    print("ATLAS: CONJUNCTION: ", conjunction)
     return conjunction
 
 def scene_state(scene,configuration):
@@ -175,20 +181,24 @@ def scene_objects(scene):
     obj = []
 
     def type_names(thing):
+        for f in tm.collect_frame_type(scene, thing):
+            print("ATLAS: name type: ", f, f.name, type(f), type(f.name))
         return [ f.name
                  for f in
                  tm.collect_frame_type(scene,thing) ]
 
     # Moveable objects are blocks
     moveable = type_names("moveable")
+    print("ATLAS: TYPE_NAMES: ", moveable)
     moveable.insert(0, "BLOCK")
 
     # Draw grid on surfaces
     locations = ['LOCATION']
     def add_loc(name,i,j):
         locations.append(tm.mangle(name,i,j))
-
+   
     map_locations(add_loc,scene)
+    print("ATLAS: locations = ", locations)
 
     return [moveable, locations]
 
@@ -245,6 +255,7 @@ def op_pick_up(scene, config, op):
 
 def op_put_down(scene, config, op):
     (a, obj, dst, i, j) = op
+    print("PUT__DOWN OP: ", op)
     nop = tm.op_nop(scene,config)
     x = i*RESOLUTION
     y = j*RESOLUTION
@@ -256,6 +267,7 @@ def op_put_down(scene, config, op):
 
 def op_stack(scene, config, op):
     (act,obj,dst) = op
+    print()
     nop = tm.op_nop(scene,config)
     g_tf_d = tm.op_tf_abs(nop,dst)
     d_tf_o = aa.tf2(1, [0,0, place_height(scene,obj) + place_height(scene,dst) + EPSILON])

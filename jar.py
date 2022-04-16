@@ -37,7 +37,7 @@ def map_locations(function, scene):
         name = frame['name']
         for geom in frame['geometry']:
             shape = geom['shape']
-            if aa.shape_is_cylinder(shape):
+            if aa.shape_is_box(shape):
                 d = shape['dimension']
                 x_max = d[0] / 2
                 y_max = d[1] / 2
@@ -64,7 +64,10 @@ def location_table(parent,frame):
     i = int(round( trans[0] / RESOLUTION))
     j = int(round( trans[1] / RESOLUTION))
     position = tm.mangle(parent_name,i,j)
-    return (["ONTABLE", name, position], i, j)
+    if name == 'pickle_jar':
+        return (["ONTABLEJAR", name, position], i, j)
+    else:
+        return (["ONTABLELID", name, position], i, j)
 
 ############################
 ### Collision Constraint ###
@@ -73,7 +76,7 @@ def location_table(parent,frame):
 # Status: Copied from tm-blocks.py. We think this one
 #         doesn't need changes (?)
 def collision_constraint(scene,op,objs):
-
+    print("ATLAS: COLLISION CONSTRAINT")
     moveable = []
     def collect_moveable(frame_name):
         frame = scene[frame_name]
@@ -100,12 +103,12 @@ def collision_constraint(scene,op,objs):
 ##########################
 def make_state(scene, configuration, is_goal):
     '''Map the scene graph `scene' to a task state expression'''
-
+    print("ATLAS: make_state")
     ## terms in the expression
     conjunction = []
     occupied = {}
     moveable_frames = tm.collect_frame_type(scene,"moveable")
-
+    # print("ATLAS: ", moveable_frames)
     ## Add object locations
     ## Left (Jar) Hand, Right (Lid) Hand
     handempty = [True, True]
@@ -113,6 +116,7 @@ def make_state(scene, configuration, is_goal):
     # updates the conjunctions, handempty list, and occupied 
     # list 
     def update_state(child,parent):
+        print("ATLAS: update_state() child: ", child, "parent: ", parent)
         # If parent is the left hand (jar hand)
         if parent == FRAME_JAR:
             conjunction.append(["HOLDINGJAR", child])
@@ -134,7 +138,7 @@ def make_state(scene, configuration, is_goal):
     def handle_moveable(frame):
         name = frame.name
         parent_name = frame.parent
-
+        print("ATLAS: handle_moveable name: ", frame.name, " parent_name: ", frame.parent)
         try:
             # If parent frame is a placement surface, position is the
             # appropriate grid cell on the surface.
@@ -142,6 +146,7 @@ def make_state(scene, configuration, is_goal):
             if aa.frame_isa(parent_frame, "surface"):
                 (x, i, j) = location_table(parent_frame,frame)
                 conjunction.append(x)
+                print("ATLAS X: ", x)
 
                 occupied[(parent_name,i,j)] = True
             else:
@@ -149,6 +154,7 @@ def make_state(scene, configuration, is_goal):
         except NameError:
                 update_state(name,parent_name)
 
+    print("ATLAS: moveable_frames: ", moveable_frames)
     map(handle_moveable, moveable_frames)
 
     if handempty[0]:
@@ -170,12 +176,15 @@ def make_state(scene, configuration, is_goal):
         # map(clear_block, moveable_frames)
         map_locations(clear_location,scene)
 
+    print("ATLAS: CONJUNCTION: ", conjunction)
     return conjunction
 
 def scene_state(scene,configuration):
+    print("ATLAS: scene_state")
     return make_state(scene, configuration, False)
 
 def goal_state(scene,configuration):
+    print("ATLAS: goal_state")
     return make_state(scene, configuration, True)
 
 ############################
@@ -185,18 +194,20 @@ def goal_state(scene,configuration):
 def scene_objects(scene):
     '''Return the PDDL objects for `scene'.'''
     obj = []
+    print("ATLAS: scene_objects")
 
-    moveable = [["JAR", "jar"],
-                ["LID", "lid"]]
+    def type_names(thing):
+        return [ f.name
+                 for f in
+                 tm.collect_frame_type(scene,thing) ]
 
-    # def type_names(thing):
-    #     return [ f.name
-    #              for f in
-    #              tm.collect_frame_type(scene,thing) ]
+    # Jar objects
+    jars = type_names("jar")
+    jars.insert(0, "JAR")
 
-    # # Moveable objects are blocks
-    # moveable = type_names("moveable")
-    # moveable.insert(0, "BLOCK")
+    # Lid objects
+    lids = type_names("lid")
+    lids.insert(0, "LID")
 
     # Draw grid on surfaces
     locations = ['LOCATION']
@@ -204,8 +215,10 @@ def scene_objects(scene):
         locations.append(tm.mangle(name,i,j))
 
     map_locations(add_loc,scene)
-
-    return [moveable, locations]
+    #print("ATLAS: locations", locations)
+    print("ATLAS: END OF SCENE OBJECTS")
+    print("ATLAS: OBJECTS: ", [jars, lids, locations])
+    return [jars, lids, locations]
 
 ############################
 ### Operator Definitions ###
@@ -235,6 +248,7 @@ def place_height(scene,name):
 # pick-up-jar
 def op_pick_up_jar(scene, config, op):
     #(a, obj, src, i, j) = op
+    print("ATLAS: op_pick_up_jar")
     obj = op[1]
     nop = tm.op_nop(scene,config)
     mp = motion_plan(nop, FRAME_JAR, tm.op_tf_abs(nop,obj))
@@ -243,6 +257,7 @@ def op_pick_up_jar(scene, config, op):
 # grab-lid
 def op_grab_lid(scene, config, op):
     #(a, obj, src, i, j) = op
+    print("ATLAS: op_grab_lid")
     obj = op[1]
     nop = tm.op_nop(scene,config)
     mp = motion_plan(nop, FRAME_LID, tm.op_tf_abs(nop,obj))
@@ -250,6 +265,7 @@ def op_grab_lid(scene, config, op):
 
 # *_put_down (binding for lid and jar put down)
 def op_put_down(scene, config, op):
+    print("ATLAS: op_put_down")
     (a, obj, dst, i, j) = op
     nop = tm.op_nop(scene,config)
     x = i*RESOLUTION
@@ -257,11 +273,12 @@ def op_put_down(scene, config, op):
     z = place_height(scene,obj) + place_height(scene,dst) + EPSILON
     d_tf_o = aa.tf2( 1, [x,y,z] )
     g_tf_d = tm.op_tf_abs(nop,dst)
-    g_tf_o = aa.mul(g_tf_d, d_tf_o );
+    g_tf_o = aa.mul(g_tf_d, d_tf_o )
     return place_tf(nop, obj, dst, g_tf_o)
 
 # twist
 def op_twist(scene, config, op):
+    print("ATLAS: op_twist")
     (a, obj, dst, i, j) = op
     nop = tm.op_nop(scene,config)
     mp = motion_plan(nop, FRAME_LID, tm.op_tf_abs(nop,obj))

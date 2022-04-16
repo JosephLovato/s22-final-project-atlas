@@ -35,6 +35,24 @@ class block {
     dimension [block_size, block_size, block_size];
 }
 
+class jar {
+    shape cylinder;
+    radius .045;
+    height .10;
+    color [0, 1, 0 ];
+    isa moveable;
+}
+
+class lid {
+    shape cylinder;
+    radius .045;
+    height .01;
+    color [0, 0, 1];
+    isa moveable;
+}
+
+
+
 
 class fixedblock {
     shape box;

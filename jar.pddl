@@ -8,23 +8,24 @@
                 (holdingJar ?x - jar)
                 (holdingLid ?x - lid)
                 (attached)
-                (ontable ?x ?loc - location)
+                (ontableJar ?x - jar ?loc - location)
+                (ontableLid ?x - lid ?loc - location)
                 (clear ?x - location)
 )
 
 (:action pick-up-jar
     :parameters (?x - jar ?loc - location)
     :precondition (and (handEmptyJar)
-                       (ontable ?x ?loc)
+                       (ontableJar ?x ?loc)
                        (attached))
     :effect (and (not(handEmptyJar))
-                 (not (ontable ?x ?loc))
+                 (not (ontableJar ?x ?loc))
                  (holdingJar ?x)
                  (clear ?loc))
 )
 
 (:action grab-lid
-    :parameters (?x - lid ?loc - location)
+    :parameters (?x - lid)
     :precondition (and (handEmptyLid)
                        (attached))
     :effect (and (not(handEmptyLid))
@@ -38,7 +39,7 @@
                        (clear ?loc))
     :effect (and (not (holdingJar ?x))
                  (handEmptyJar)
-                 (ontable ?x ?loc)
+                 (ontableJar ?x ?loc)
                  (not (clear ?loc)))
 )
 
@@ -49,7 +50,7 @@
                        (clear ?loc))
     :effect (and (not (holdingLid ?x))
                  (handEmptyLid)
-                 (ontable ?x ?loc)
+                 (ontableLid ?x ?loc)
                  (not (clear ?loc)))
 )
 
