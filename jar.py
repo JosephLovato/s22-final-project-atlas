@@ -33,6 +33,7 @@ import CL as cl
 #############
 
 def map_locations(function, scene):
+    print("ATLAS: map_locations")
     for frame in tm.collect_frame_type(scene,"surface"):
         name = frame['name']
         for geom in frame['geometry']:
@@ -58,6 +59,7 @@ def map_locations(function, scene):
 
 
 def location_table(parent,frame):
+    print("ATLAS: location_table")
     parent_name = parent.name
     name = frame.name
     trans = aa.translation( aa.frame_fixed_tf(frame) )
@@ -116,7 +118,8 @@ def make_state(scene, configuration, is_goal):
     # updates the conjunctions, handempty list, and occupied 
     # list 
     def update_state(child,parent):
-        print("ATLAS: update_state() child: ", child, "parent: ", parent)
+        print("ATLAS: update_state")
+        #print("ATLAS: update_state() child: ", child, "parent: ", parent)
         # If parent is the left hand (jar hand)
         if parent == FRAME_JAR:
             conjunction.append(["HOLDINGJAR", child])
@@ -136,9 +139,10 @@ def make_state(scene, configuration, is_goal):
             occupied[parent] = True
 
     def handle_moveable(frame):
+        print("ATLAS: handle_moveable")
         name = frame.name
         parent_name = frame.parent
-        print("ATLAS: handle_moveable name: ", frame.name, " parent_name: ", frame.parent)
+        #print("ATLAS: handle_moveable name: ", frame.name, " parent_name: ", frame.parent)
         try:
             # If parent frame is a placement surface, position is the
             # appropriate grid cell on the surface.
@@ -154,7 +158,7 @@ def make_state(scene, configuration, is_goal):
         except NameError:
                 update_state(name,parent_name)
 
-    print("ATLAS: moveable_frames: ", moveable_frames)
+    #print("ATLAS: moveable_frames: ", moveable_frames)
     map(handle_moveable, moveable_frames)
 
     if handempty[0]:
@@ -169,6 +173,7 @@ def make_state(scene, configuration, is_goal):
     #         conjunction.append(["CLEAR", name])
 
     def clear_location(name,i,j):
+        print("ATLAS: clear_locations")
         if not (name,i,j) in occupied:
             conjunction.append(["CLEAR", tm.mangle(name,i,j)])
 
@@ -176,7 +181,7 @@ def make_state(scene, configuration, is_goal):
         # map(clear_block, moveable_frames)
         map_locations(clear_location,scene)
 
-    print("ATLAS: CONJUNCTION: ", conjunction)
+    #print("ATLAS: CONJUNCTION: ", conjunction)
     return conjunction
 
 def scene_state(scene,configuration):
@@ -217,7 +222,7 @@ def scene_objects(scene):
     map_locations(add_loc,scene)
     #print("ATLAS: locations", locations)
     print("ATLAS: END OF SCENE OBJECTS")
-    print("ATLAS: OBJECTS: ", [jars, lids, locations])
+    #print("ATLAS: OBJECTS: ", [jars, lids, locations])
     return [jars, lids, locations]
 
 ############################
@@ -226,6 +231,7 @@ def scene_objects(scene):
 
 # Helpers?
 def motion_plan(op, frame, goal):
+    print("ATLAS: motion_plan")
     scene = op.final_scene
     sub_scenegraph = aa.scene_chain(scene, "", frame)
     return tm.op_motion( op, sub_scenegraph, goal )
@@ -235,10 +241,12 @@ def motion_plan(op, frame, goal):
 #     return tm.op_reparent(mp, FRAME, obj)
 
 def place_tf(op, obj, dst_frame, g_tf_o ):
+    print("ATLAS: place_tf")
     mp =  motion_plan(op, obj, g_tf_o)
     return tm.op_reparent(mp, dst_frame, obj)
 
 def place_height(scene,name):
+    print("ATLAS: place_height")
     g = scene[name].collision
     s = g[0].shape
     if aa.shape_is_box(s):
