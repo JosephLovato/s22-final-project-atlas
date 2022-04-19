@@ -83,7 +83,7 @@ frame end_effector_grasp_lid {
 }
 
 frame end_effector_grasp_jar {
-    parent left_endpoint;
+    parent right_endpoint;
     quaternion [0,1,0,0];
     translation [0,0,.075];
 }

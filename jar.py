@@ -173,7 +173,7 @@ def make_state(scene, configuration, is_goal):
     #         conjunction.append(["CLEAR", name])
 
     def clear_location(name,i,j):
-        print("ATLAS: clear_locations")
+        #print("ATLAS: clear_locations")
         if not (name,i,j) in occupied:
             conjunction.append(["CLEAR", tm.mangle(name,i,j)])
 
@@ -246,9 +246,11 @@ def place_tf(op, obj, dst_frame, g_tf_o ):
     return tm.op_reparent(mp, dst_frame, obj)
 
 def place_height(scene,name):
-    print("ATLAS: place_height")
+    #print("ATLAS: place_height")
     g = scene[name].collision
     s = g[0].shape
+    if aa.shape_is_cylinder(s):
+        return s.height - .1
     if aa.shape_is_box(s):
         return s.dimension[2] / 2
     

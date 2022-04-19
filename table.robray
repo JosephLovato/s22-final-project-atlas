@@ -11,7 +11,9 @@ frame table_base {
 
 frame front_table {
     parent table_base;
-    translation [.6, 0, 0];
+    //translation [.2, .6, 0]; //near center between arms
+    translation [.6, 0, 0]; //near right arm
+    //translation [-0.2, 1, 0]; //near left arm
     geometry {
         isa table;
         dimension [.75, .75, table_size];
