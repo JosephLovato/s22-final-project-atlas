@@ -17,9 +17,11 @@ frame block_a {
 
 frame block_b {
     parent block_c;
-    translation [0, -.25, block_stack];
+    translation [0, 0, block_stack];
     geometry {
         isa block;
         isa blue;
     }
 }
+
+

@@ -6,7 +6,7 @@
 RESOLUTION=0.1
 
 # End-Effector Frame
-FRAME = "end_effector_grasp"
+FRAME = "left_end_effector_grasp"
 
 # Object placement tolerance
 EPSILON = 1e-4
@@ -210,6 +210,7 @@ def scene_objects(scene):
 def motion_plan(op, frame, goal):
     scene = op.final_scene
     sub_scenegraph = aa.scene_chain(scene, "", frame)
+    print("TEST goal is, ", sub_scenegraph)
     return tm.op_motion( op, sub_scenegraph, goal )
 
 # def pick(op, obj):
@@ -248,14 +249,18 @@ def place_height(scene,name):
 
 def op_pick_up(scene, config, op):
     #(a, obj, src, i, j) = op
+    print("TEST in op_pick_up")
     obj = op[1]
     nop = tm.op_nop(scene,config)
     mp = motion_plan(nop, FRAME, tm.op_tf_abs(nop,obj))
+    print("TEST: ", mp)
     return tm.op_reparent(mp, FRAME, obj)
 
 def op_put_down(scene, config, op):
     (a, obj, dst, i, j) = op
-    print("PUT__DOWN OP: ", op)
+    print("ATLAS PUT__DOWN SCENE: ", scene)
+    print("ATLAS PUT__DOWN CONFIG: ", config)
+    print("ATLAS PUT__DOWN OP: ", op)
     nop = tm.op_nop(scene,config)
     x = i*RESOLUTION
     y = j*RESOLUTION

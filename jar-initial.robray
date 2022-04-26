@@ -1,20 +1,23 @@
-include "class.robray"
+include "square-jar-class.robray"
 include "table.robray"
 
 
 
 frame pickle_jar {
      parent front_table;
-     translation [0, 0, 0];
+     translation [0, 0, block_size / 2];
+    //  jar on its side:
+    //  translation [0, 0, 0.045];
+    //  rpy [90*deg, 90*deg, 0];
      geometry {
          isa jar;
      }
  }
 
- frame pickle_lid {
-     parent pickle_jar;
-     translation [0, 0, 0.1];
-     geometry {
-         isa lid;
-     }
- }
+frame pickle_lid {
+    parent pickle_jar;
+    translation [0, 0, block_size / 2];
+    geometry {
+       isa lid;
+    }
+}

@@ -6,12 +6,12 @@ def table_height .05;
 
 frame table_base {
     translation [.1, -.3, table_height];
-    rpy [0, 0, -45*deg];
+    rpy [0, 0, 0];
 }
 
 frame front_table {
     parent table_base;
-    translation [.6, 0, 0];
+    translation [0.7, 0.3, 0];
     geometry {
         isa table;
         dimension [.75, .75, table_size];

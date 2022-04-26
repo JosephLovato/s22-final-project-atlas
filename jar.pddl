@@ -18,7 +18,7 @@
     :precondition (and (handEmptyJar)
                        (ontableJar ?x ?loc)
                        (attached))
-    :effect (and (not(handEmptyJar))
+    :effect (and (not (handEmptyJar))
                  (not (ontableJar ?x ?loc))
                  (holdingJar ?x)
                  (clear ?loc))
@@ -27,9 +27,11 @@
 (:action grab-lid
     :parameters (?x - lid)
     :precondition (and (handEmptyLid)
+                       (not (handEmptyJar))
                        (attached))
-    :effect (and (not(handEmptyLid))
-                 (holdingLid ?x))
+    :effect (and (not (handEmptyLid))
+                 (holdingLid ?x)
+                 (not (attached)))
 )
 
 (:action put-down-jar
@@ -54,12 +56,13 @@
                  (not (clear ?loc)))
 )
 
-(:action twist
-    :parameters (?x - jar ?y - lid)
-    :precondition (and (holdingJar ?x)
-                  (holdingLid ?y)
-                  (attached))
-    :effect (and (holdingJar ?x)
-                 (holdingLid ?y)
-                 (not (attached)))
-))
+;(:action twist
+;    :parameters (?x - jar ?y - lid)
+;    :precondition (and (holdingJar ?x)
+;                  (holdingLid ?y)
+;                  (attached))
+;    :effect (and (holdingJar ?x)
+;                 (holdingLid ?y)
+;                 (not (attached)))
+;)
+)

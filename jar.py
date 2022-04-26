@@ -250,7 +250,7 @@ def place_height(scene,name):
     g = scene[name].collision
     s = g[0].shape
     if aa.shape_is_cylinder(s):
-        return s.height - .1
+        return 0
     if aa.shape_is_box(s):
         return s.dimension[2] / 2
     
@@ -287,12 +287,12 @@ def op_put_down(scene, config, op):
     return place_tf(nop, obj, dst, g_tf_o)
 
 # twist
-def op_twist(scene, config, op):
-    print("ATLAS: op_twist")
-    (a, obj, dst, i, j) = op
-    nop = tm.op_nop(scene,config)
-    mp = motion_plan(nop, FRAME_LID, tm.op_tf_abs(nop,obj))
-    return tm.op_reparent(mp, FRAME_LID, obj)
+# def op_twist(scene, config, op):
+#     print("ATLAS: op_twist")
+#     (a, obj, dst, i, j) = op
+#     nop = tm.op_nop(scene,config)
+#     mp = motion_plan(nop, FRAME_LID, tm.op_tf_abs(nop,obj))
+#     return tm.op_reparent(mp, FRAME_LID, obj)
 
 ##########################
 ### Register functions ###
@@ -305,6 +305,6 @@ tm.bind_refine_operator(op_pick_up_jar, "PICK-UP-JAR")
 tm.bind_refine_operator(op_put_down, "PUT-DOWN-JAR")
 tm.bind_refine_operator(op_put_down, "PUT-DOWN-LID")
 tm.bind_refine_operator(op_grab_lid, "GRAB-LID")
-tm.bind_refine_operator(op_twist, "TWIST")
+# tm.bind_refine_operator(op_twist, "TWIST")
 
 tm.bind_collision_constraint(collision_constraint)

@@ -58,8 +58,8 @@ def tray_stack (tray_size + table_size)/2 + .1*mm;
 
 
 /** Grasp **/
-frame end_effector_grasp {
-    parent right_endpoint;
+frame left_end_effector_grasp {
+    parent left_endpoint;
     quaternion [0,1,0,0];
     translation [0,0,.075];
 }

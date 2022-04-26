@@ -54,12 +54,13 @@
                  (not (clear ?loc)))
 )
 
-(:action twist
-    :parameters (?x - jar ?y - lid)
-    :precondition (and (holdingJar ?x)
-                  (holdingLid ?y)
-                  (not (attached)))
-    :effect (and (holdingJar ?x)
-                 (holdingLid ?y)
-                 (not (attached)))
-))
+;(:action twist
+;    :parameters (?x - jar ?y - lid)
+;    :precondition (and (holdingJar ?x)
+;                  (holdingLid ?y)
+;                  (not (attached)))
+;    :effect (and (holdingJar ?x)
+;                 (holdingLid ?y)
+;                 (not (attached)))
+;)
+)

@@ -4,9 +4,13 @@ include "table.robray"
 
 
 frame pickle_jar {
-     parent front_table;
+     parent end_effector_grasp_jar;
     //translation [0.1, -0.2, 0]; 
-    translation [-0.2, -0.1, 0]; 
+    translation [0, 0, 0]; 
+
+
+
+    //translation [-0.2, 0.2, 0]; //DO NOT DELETE NO MATTER WHAT. LEFT ARM WORKS
      geometry {
          isa jar;
      }
@@ -15,7 +19,7 @@ frame pickle_jar {
 frame pickle_lid {
      parent front_table;
      //translation [-0.2, -0.1, 0]; 
-    translation [0.1, -0.2, 0]; 
+    translation [0, 0, 0]; 
      geometry {
          isa lid;
      }
