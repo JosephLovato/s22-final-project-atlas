@@ -1,4 +1,4 @@
-include "class.robray"
+include "square-jar-class.robray"
 include "table.robray"
 
 
@@ -6,8 +6,8 @@ include "table.robray"
 frame pickle_jar {
      parent front_table;
      //translation [0, 0, 0]; //comment for grabbing lid
-     rpy[0, -90*deg, 0];
-     translation [0.2, 0.2, 0.1];
+     rpy[-90*deg, 0, 0];
+     translation [0, 0, 0.1];
      
      
      

@@ -1,0 +1,3 @@
+/home/eryk/CSCI534/s22-final-project-atlas/aminoo/CMakeFiles/rebuild_cache.dir
+/home/eryk/CSCI534/s22-final-project-atlas/aminoo/CMakeFiles/edit_cache.dir
+/home/eryk/CSCI534/s22-final-project-atlas/aminoo/CMakeFiles/baxter-model.dir

@@ -4,19 +4,28 @@ include "table.robray"
 
 
 frame pickle_jar {
-     parent front_table;
-     translation [0, 0.1, 0];
-     //  jar on its side:
-    //  translation [0, -0.1, 0.045];
-    //  rpy [90*deg, 90*deg, 0];
-     geometry {
+    //works but jar moves before lid
+    //parent front_table;
+    //translation [-0.2, 0.2, 0.1]; 
+    
+    parent front_table;
+    translation [0, 0, 0.1];
+    rpy [-90*deg, 0, 0];
+    
+    geometry {
          isa jar;
      }
  }
 
 frame pickle_lid {
-   parent front_table;
-    translation [-0.1, -0.1, 0];
+    //works but jar moves before lid
+    parent front_table;
+    translation [-.3, -0.1, 0]; 
+
+    //parent pickle_jar;
+    //rpy[-90*deg, 0, 0];
+    //translation[0, -0.07, 0];
+
     geometry {
         isa lid;
     }

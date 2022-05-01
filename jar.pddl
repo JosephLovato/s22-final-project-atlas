@@ -16,6 +16,7 @@
 (:action pick-up-jar
     :parameters (?x - jar ?loc - location)
     :precondition (and (handEmptyJar)
+                       (not (handEmptyLid))
                        (ontableJar ?x ?loc)
                        (attached))
     :effect (and (not (handEmptyJar))

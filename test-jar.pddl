@@ -16,6 +16,7 @@
 (:action pick-up-jar
     :parameters (?x - jar ?loc - location)
     :precondition (and (handEmptyJar)
+                       (not (handEmptyLid))
                        (ontableJar ?x ?loc)
                        (not (attached)))
     :effect (and (not(handEmptyJar))
@@ -46,6 +47,7 @@
 (:action put-down-lid
     :parameters (?x - lid ?loc - location)
     :precondition (and (holdingLid ?x)
+                       (not (handEmptyJar))
                        (not (attached))
                        (clear ?loc))
     :effect (and (not (holdingLid ?x))

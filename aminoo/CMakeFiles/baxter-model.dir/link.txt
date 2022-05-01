@@ -1,0 +1,1 @@
+/usr/bin/cc -fPIC   -shared  -o libbaxter-model.so CMakeFiles/baxter-model.dir/baxter-model.c.o  -lamino-gl -lamino -lamino 

@@ -1,13 +1,12 @@
-include "class.robray"
+include "square-jar-class.robray"
 include "table.robray"
 
 
 
 frame pickle_jar {
-     parent end_effector_grasp_jar;
+    parent front_table;
     //translation [0.1, -0.2, 0]; 
-    translation [0, 0, 0]; 
-
+    translation [-0.2, 0.2, 0]; 
 
 
     //translation [-0.2, 0.2, 0]; //DO NOT DELETE NO MATTER WHAT. LEFT ARM WORKS
@@ -17,10 +16,10 @@ frame pickle_jar {
  }
 
 frame pickle_lid {
-     parent front_table;
-     //translation [-0.2, -0.1, 0]; 
-    translation [0, 0, 0]; 
-     geometry {
+    parent front_table;
+    translation [-.3, -0.1, 0]; 
+    //translation [0.1, 0, 0]; 
+    geometry {
          isa lid;
      }
  }

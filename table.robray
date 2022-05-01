@@ -24,9 +24,11 @@ frame front_table {
 frame curtain {
     translation [-.35, 0, 0];
     rpy [0, 0, 0];
+    
     geometry {
         shape box;
         dimension [.01, 5, 5];
+        color [1, 1, 1];
     }
 }
 
