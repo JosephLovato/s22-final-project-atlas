@@ -1,0 +1,60 @@
+include "square-jar-class.robray"
+include "table.robray"
+
+// A
+
+frame pickle_jar_a {
+    //works but jar moves before lid
+    //parent front_table;
+    //translation [-0.2, 0.2, 0.1]; 
+    
+    parent front_table;
+    translation [0, 0, 0.1];
+    rpy [-90*deg, 0, 0];
+    
+    geometry {
+         isa jar;
+     }
+ }
+
+frame pickle_lid_a {
+    //works but jar moves before lid
+    parent front_table;
+    translation [-.3, -0.1, 0]; 
+
+    //parent pickle_jar;
+    //rpy[-90*deg, 0, 0];
+    //translation[0, -0.07, 0];
+
+    geometry {
+        isa lid;
+    }
+}
+
+// B
+frame pickle_jar_b {
+    parent pickle_jar_a;
+    translation [0, -block_size, 0];
+    rpy [-90*deg, 0, 0];
+    // parent front_table;
+    // translation [0.2, 0, 0.1];
+    // rpy [-90*deg, 0, 0];
+
+     geometry {
+         isa jar;
+     }
+ }
+
+frame pickle_lid_b {
+    //works but jar moves before lid
+    parent pickle_lid_a;
+    translation [0, 0, .03];
+    
+    //parent pickle_jar;
+    //rpy[-90*deg, 0, 0];
+    //translation[0, -0.07, 0];
+
+    geometry {
+       isa lid;
+    }
+}
