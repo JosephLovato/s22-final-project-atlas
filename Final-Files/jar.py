@@ -5,7 +5,7 @@
 # Table grid resolution
 RESOLUTION=0.1
 
-# End-Effector Frame
+#Set End-Effector Frame
 FRAME_JAR = "end_effector_grasp_jar"
 FRAME_LID = "end_effector_grasp_lid"
 
@@ -33,7 +33,8 @@ import CL as cl
 #############
 
 def map_locations(function, scene):
-    print("ATLAS: map_locations")
+    #print("ATLAS: map_locations")
+
     for frame in tm.collect_frame_type(scene,"surface"):
         name = frame['name']
         for geom in frame['geometry']:
@@ -59,7 +60,8 @@ def map_locations(function, scene):
 
 
 def location_table(parent,frame):
-    print("ATLAS: location_table")
+    #print("ATLAS: location_table")
+
     parent_name = parent.name
     name = frame.name
     trans = aa.translation( aa.frame_fixed_tf(frame) )
@@ -111,6 +113,7 @@ def make_state(scene, configuration, is_goal):
     occupied = {}
     moveable_frames = tm.collect_frame_type(scene,"moveable")
     # print("ATLAS: ", moveable_frames)
+
     ## Add object locations
     ## Left (Jar) Hand, Right (Lid) Hand
     handempty = [True, True]
@@ -166,13 +169,7 @@ def make_state(scene, configuration, is_goal):
     if handempty[1]:
         conjunction.append(["HANDEMPTYLID"])
 
-    ## Clear things (COMMENTED OUT BECAUSE WE DON'T THINK WE NEED IT)
-    # def clear_block(frame):
-    #     name = frame.name
-    #     if not name in occupied:
-    #         conjunction.append(["CLEAR", name])
-
-    def clear_location(name,i,j):
+    def clear_location(name,i,j): #Set location to being clear if not occupied by any object
         #print("ATLAS: clear_locations")
         if not (name,i,j) in occupied:
             conjunction.append(["CLEAR", tm.mangle(name,i,j)])
@@ -229,16 +226,12 @@ def scene_objects(scene):
 ### Operator Definitions ###
 ############################
 
-# Helpers?
+# Helpers
 def motion_plan(op, frame, goal):
     print("ATLAS: motion_plan")
     scene = op.final_scene
     sub_scenegraph = aa.scene_chain(scene, "", frame)
     return tm.op_motion( op, sub_scenegraph, goal )
-
-# def pick(op, obj):
-#     mp = motion_plan(op, FRAME, tm.op_tf_abs(op,obj))
-#     return tm.op_reparent(mp, FRAME, obj)
 
 def place_tf(op, obj, dst_frame, g_tf_o ):
     print("ATLAS: place_tf")

@@ -42,6 +42,7 @@ STARTS = [START0, START1, START2, START3, START4]
 
 collisions = {"BAXTER Collisions"}
 
+#set initial angles
 for i in range(0, 5):
     config_dict = {
         "right_s0": STARTS[i][0],
@@ -64,7 +65,9 @@ for i in range(0, 5):
     fk.config = config_dict
     cl = SceneCollision(sg)
     cl_set = SceneCollisionSet(sg)
-    inCollision = cl.check(fk, cl_set)
+    inCollision = cl.check(fk, cl_set) #check for collision
+
+    #add all collisions found
     for i in range(sg.frame_count):
         for j in range(sg.frame_count):
             if cl_set[i, j]:
@@ -80,5 +83,5 @@ win.fk = fk
 win.start(False)
 print()
 
-for c in collisions:
+for c in collisions: #print collisions
     print(c)

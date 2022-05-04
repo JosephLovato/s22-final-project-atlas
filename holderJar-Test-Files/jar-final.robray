@@ -1,7 +1,7 @@
 include "class.robray"
 include "table.robray"
 
-
+//invisible jar used to try and get Baxter to grab side of actual pickle jar
 frame holder_jar {
     parent end_effector_grasp_jar;
     rpy[-90*deg, 0, 0];
@@ -13,12 +13,8 @@ frame holder_jar {
 }
 
 frame pickle_jar {
+    //set final location relative to holder_jar with slight offset to get holder jar on the edge of actual jar
      parent holder_jar;
-     //translation [0, 0, 0]; //comment for grabbing lid
-     //rpy[0, -90*deg, 0];
-     //translation [0.2, 0.2, 0.1];
-     //translation [-0.2, 0.1, 0]; //DO NOT DELETE NO MATTER WHAT. LEFT ARM WORKS
-     
      rpy[90*deg, 0, 0];
      translation[0,0.045, 0];
      
@@ -29,8 +25,6 @@ frame pickle_jar {
 
  frame pickle_lid {
      parent pickle_jar;
-     //translation [-0.2, -0.1, 0]; //comment for grabbing lid
-     //translation [0, 0, 0]; //comment for grabbing jar
      translation[0, 0, 0.1];
      
      geometry {

@@ -51,6 +51,7 @@ fk = SceneFK(sg)
 # Do a simple wave
 dt = 1.0 / 60
 t = 0
+#set initial angles
 config_dict = {
     "left_s0": -.75 * pi,
     "left_s1": .75 * pi,

@@ -1,5 +1,5 @@
-include "square-jar-class.robray"
-include "table.robray"
+include "multi-square-jar-class.robray"
+include "multi-table.robray"
 
 // A
 
