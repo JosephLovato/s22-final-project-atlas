@@ -1,6 +1,6 @@
 # README
 
-Impementation for Dual Arm Task-Motion Planning of Baxter the Robot.
+Implementation for Dual Arm Task-Motion Planning of Baxter the Robot.
 
 ## Directory Structure
 ./Final-Files: files used in final draft of single jar-opening problem
